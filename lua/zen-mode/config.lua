@@ -75,6 +75,9 @@ local defaults = {
         neovide_cursor_vfx_mode = "",
       },
     },
+    -- keep the parent window's buffer in sync with the zen window
+    -- useful for preserving buffer state (e.g., LSP) when switching buffers in zen mode
+    sync_parent_buffer = { enabled = true },
   },
   -- callback where you can add custom code when the zen window opens
   on_open = function(_win) end,

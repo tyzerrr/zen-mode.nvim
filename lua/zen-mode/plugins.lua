@@ -169,4 +169,9 @@ function M.todo(state, disable)
   end
 end
 
+function M.sync_parent_buffer(state, disable)
+  local view = require("zen-mode.view")
+  view.sync_parent_buffer_enabled = disable
+end
+
 return M

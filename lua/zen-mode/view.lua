@@ -11,6 +11,7 @@ M.win = nil
 M.opts = nil
 M.state = {}
 M.closed = false
+M.sync_parent_buffer_enabled = false
 
 function M.is_open()
   return M.win and vim.api.nvim_win_is_valid(M.win)
@@ -211,6 +212,7 @@ function M.create(opts)
       autocmd VimResized * lua require("zen-mode.view").fix_layout(true)
       autocmd CursorHold * lua require("zen-mode.view").fix_layout()
       autocmd BufWinEnter * lua require("zen-mode.view").on_buf_win_enter()
+      autocmd BufEnter * lua require("zen-mode.view").sync_parent_buffer()
     augroup end]]
 
   vim.api.nvim_exec(augroup:format(M.win, M.win), false)
@@ -238,6 +240,16 @@ end
 function M.on_buf_win_enter()
   if vim.api.nvim_get_current_win() == M.win then
     M.fix_hl(M.win)
+  end
+end
+
+function M.sync_parent_buffer()
+  if not M.sync_parent_buffer_enabled then
+    return
+  end
+  if M.is_open() and M.parent and vim.api.nvim_win_is_valid(M.parent) then
+    local zen_buf = vim.api.nvim_win_get_buf(M.win)
+    vim.api.nvim_win_set_buf(M.parent, zen_buf)
   end
 end
 
