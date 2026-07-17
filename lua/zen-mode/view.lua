@@ -189,6 +189,8 @@ function M.create(opts)
   vim.cmd([[norm! zz]])
   M.fix_hl(M.win)
 
+  M.fix_winbar()
+
   for k, v in pairs(opts.window.options or {}) do
     vim.api.nvim_win_set_option(M.win, k, v)
   end
@@ -237,9 +239,19 @@ function M.is_float(win)
   return opts and opts.relative and opts.relative ~= ""
 end
 
+-- winbar is set with the local scope, so it gets reset when
+-- another buffer is displayed in the zen window (e.g. via Telescope)
+function M.fix_winbar()
+  if M.is_open() and M.opts and M.opts.window.show_filename then
+    local winbar = (M.opts.window.options or {}).winbar or "%F"
+    vim.api.nvim_win_set_option(M.win, "winbar", winbar)
+  end
+end
+
 function M.on_buf_win_enter()
   if vim.api.nvim_get_current_win() == M.win then
     M.fix_hl(M.win)
+    M.fix_winbar()
   end
 end
 

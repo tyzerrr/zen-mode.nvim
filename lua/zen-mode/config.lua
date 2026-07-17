@@ -12,6 +12,7 @@ local defaults = {
     -- * a percentage of the width / height of the editor when <= 1
     width = 120, -- width of the zen window
     height = 1, -- height of the zen window
+    show_filename = true, -- show the file name (absolute path) in a winbar at the top of the zen window
     -- by default, no options are changed in for the zen window
     -- uncomment any of the options below, or add other vim.wo options you want to apply
     options = {

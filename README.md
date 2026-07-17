@@ -65,6 +65,7 @@ Install the plugin with your preferred package manager:
     -- * a function that returns the width or the height
     width = 120, -- width of the Zen window
     height = 1, -- height of the Zen window
+    show_filename = true, -- show the file name (absolute path) in a winbar at the top of the Zen window
     -- by default, no options are changed for the Zen window
     -- uncomment any of the options below, or add other vim.wo options you want to apply
     options = {
